@@ -1,0 +1,33 @@
+int maxProfit(int k, int N, int prices[]) {
+        // code here
+        if(N==0)
+        {
+            return 0;
+        }
+        int dp[N][k+1];
+        for(int t = 0;t<=k;t++)
+        {
+            dp[0][t] = 0;
+        }
+        for(int d = 0;d<=N-1;d++)
+        {
+            dp[d][0] = 0;
+        }
+        for(int t = 1;t<=k;t++)
+        {
+            for(int d = 1;d<N;d++)
+            {
+                dp[d][t] = dp[d-1][t];
+                int max = dp[d-1][t];
+                for(int pd = 0;pd<d;pd++)
+                {
+                    if(prices[d]-prices[pd]+dp[pd][t-1]>max)
+                    {
+                        max = prices[d]-prices[pd]+dp[pd][t-1];
+                    }
+                }
+                dp[d][t]=max;
+            }
+        }
+        return dp[N-1][k];
+    }
